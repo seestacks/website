@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { site } from "@/content/site.config";
+import { site } from "@/content/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,13 +15,13 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-const title = "Seestack — AI Workflows and Developer Systems";
+const title = "Seestack: AI Workflows and Developer Systems";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
     default: title,
-    template: "%s — Seestack",
+    template: "%s | Seestack",
   },
   description: site.description,
   applicationName: site.name,
@@ -64,12 +64,19 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  // The inline colours paint before the stylesheet lands, so a slow load
+  // flashes the page colour instead of white. Keep them in sync with
+  // --color-ink and --color-cream in globals.css.
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      style={{ backgroundColor: "#08090c", colorScheme: "dark" }}
     >
-      <body className="bg-ink text-cream flex min-h-full flex-col">
+      <body
+        className="bg-ink text-cream flex min-h-full flex-col"
+        style={{ backgroundColor: "#08090c", color: "#f4f6f9" }}
+      >
         <a
           href="#main"
           className="btn btn-primary sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50"

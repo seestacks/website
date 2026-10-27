@@ -1,10 +1,10 @@
 import { Metadata } from "next";
-import { SetupFunnel } from "@/components/setup-funnel";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
+import { SetupFunnel } from "@/components/sections/setup-funnel";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { SiteHeader } from "@/components/layout/site-header";
 
 export const metadata: Metadata = {
-  title: "Get Claude Code Mods & Tools — See Stack",
+  title: "Get Claude Code Mods & Tools | See Stack",
   description:
     "Unlock the one-line install command, context-bar mod, and Obsidian starter vault.",
 };

@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { emailSignup } from "@/content/site.config";
+import { emailSignup } from "@/content/email";
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, email } = await req.json();
+    const { name, email, source } = await req.json();
 
     if (!email || typeof email !== "string" || !email.includes("@")) {
       return NextResponse.json({ error: "A valid email is required" }, { status: 400 });
@@ -15,9 +15,9 @@ export async function POST(req: NextRequest) {
       try {
         const formData = new URLSearchParams();
         formData.append(emailSignup.emailFieldName || "email", email.trim().toLowerCase());
+        formData.append("tag", typeof source === "string" && source ? source : "site");
         if (name) {
           formData.append("metadata", JSON.stringify({ first_name: name.trim() }));
-          formData.append("tag", "youtube-funnel");
         }
 
         // Post to Buttondown or hosted provider

@@ -1,4 +1,4 @@
-import { ogAlt, ogContentType, ogSize, renderOgImage } from "@/components/og-image";
+import { ogAlt, ogContentType, ogSize, renderOgImage } from "@/lib/og-image";
 
 export const alt = ogAlt;
 export const size = ogSize;

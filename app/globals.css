@@ -2,29 +2,31 @@
 
 /* ==========================================================================
    Seestack design tokens
-   Dark graphite surfaces, warm off-white type, one electric cyan accent.
+   Near-black surfaces, neutral type, one restrained indigo accent.
+   The accent is reserved for actions and one highlighted phrase, never for
+   decoration, borders or body copy.
    ========================================================================== */
 
 @theme {
   /* Surfaces */
-  --color-ink: #0a0c10;
-  --color-ink-raised: #0d1016;
-  --color-panel: #11151d;
-  --color-panel-hi: #161b25;
+  --color-ink: #08090c;
+  --color-ink-raised: #0b0d13;
+  --color-panel: #0f121a;
+  --color-panel-hi: #151a24;
 
   /* Hairlines */
-  --color-hair: #1f2633;
-  --color-hair-hi: #2b3444;
+  --color-hair: #1d222c;
+  --color-hair-hi: #2a3140;
 
   /* Type */
-  --color-cream: #f1ede5;
-  --color-cream-dim: #cbc6bd;
-  --color-muted: #9c968c;
+  --color-cream: #f4f6f9;
+  --color-cream-dim: #b3bac6;
+  --color-muted: #838b98;
 
   /* Accent */
-  --color-accent: #34ddf5;
-  --color-accent-hi: #82ecff;
-  --color-accent-deep: #0b5c6b;
+  --color-accent: #6f5cf5;
+  --color-accent-hi: #8878ff;
+  --color-accent-deep: #241d55;
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", sans-serif;
@@ -77,8 +79,8 @@
    Components
    ==========================================================================
    These live in the `components` layer on purpose. Tailwind's utilities layer
-   is declared after it, so a utility written at a call site — `hidden`,
-   `text-accent`, `disabled:bg-transparent` — still wins over these defaults.
+   is declared after it, so a utility written at a call site (`hidden`,
+   `text-accent`, `disabled:bg-transparent`) still wins over these defaults.
    Unlayered rules would silently beat every utility.
    ========================================================================== */
 
@@ -93,6 +95,36 @@
     @apply rounded-xl border border-hair bg-panel;
   }
 
+  /* Section edges. A flat border runs the full viewport and makes a long page
+     read as a stack of boxes, so the line fades out at both ends and stops at
+     the content width instead. Set on the section itself, no extra markup. */
+  .section-edge,
+  .section-edge-bottom {
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-hair-hi) 12%,
+      var(--color-hair-hi) 88%,
+      transparent
+    );
+    background-size: min(100%, 72rem) 1px;
+    background-position: center top;
+    background-repeat: no-repeat;
+  }
+
+  .section-edge-bottom {
+    background-position: center bottom;
+  }
+
+  /* Horizontal rails scroll by touch, drag or chevron, never a scrollbar. */
+  .no-scrollbars {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbars::-webkit-scrollbar {
+    display: none;
+  }
+
   /* Buttons ------------------------------------------------------------ */
 
   .btn {
@@ -102,7 +134,7 @@
   }
 
   .btn-primary {
-    @apply bg-accent text-ink;
+    @apply bg-accent text-white;
   }
   .btn-primary:hover:not(:disabled) {
     background-color: var(--color-accent-hi);
@@ -123,6 +155,18 @@
   /* A control that is deliberately not available yet. */
   .btn-inert {
     @apply cursor-not-allowed border border-hair bg-transparent text-muted;
+  }
+
+  /* Fields --------------------------------------------------------------
+     Height is left to the call site (h-12 in the hero, py-3 in the funnel)
+     so one class serves both sizes. */
+
+  .field {
+    @apply w-full rounded-lg border border-hair-hi bg-panel px-4 text-sm
+           text-cream transition-colors outline-none placeholder:text-muted;
+  }
+  .field:focus {
+    border-color: var(--color-accent);
   }
 
   /* Type --------------------------------------------------------------- */
